@@ -18,7 +18,7 @@
             class="text-center pt-4 rounded-xl"
             elevation="0"
           >
-            <v-card-title class="font-weight-medium text-title-medium"
+            <v-card-title class="text-title-small text-grey-darken-1"
               >Total Job Applications</v-card-title
             >
             <v-card-text

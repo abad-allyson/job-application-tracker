@@ -9,7 +9,7 @@ import { paginate } from "../utils/paginate.util.js";
 import { logger } from "../utils/logger.util.js";
 
 export function useJobApplicationRepo() {
-  const collection = db.collection("applications");
+  const collection = db.collection("job_applications");
 
   if (!db) {
     console.log("Mongodb client is requred");
