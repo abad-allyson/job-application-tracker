@@ -80,8 +80,8 @@
       </v-form>
     </v-card-text>
 
-    <v-toolbar color="surface" flat>
-      <v-row class="pa-6 mt-4">
+    <v-toolbar color="surface">
+      <v-row class="pa-6 mt-2">
         <v-col cols="6">
           <v-btn block variant="outlined" size="large" @click="emit('cancel')">
             Cancel
