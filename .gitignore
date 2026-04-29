@@ -1,0 +1,8 @@
+job-tracker-web/node_modules
+job-tracker-web/.nuxt
+job-tracker-web/.env
+
+
+job-tracker-backend/node_modules
+job-tracker-backend/*.log
+job-tracker-backend/.env
