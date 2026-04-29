@@ -66,17 +66,35 @@ export function useJobApplicationRepo() {
     if (search) {
       query.$text = { $search: search };
     }
+
     try {
-      const items = await collection
+      const [result] = await collection
         .aggregate([
           { $match: query },
-          { $skip: page * limit },
-          { $limit: limit },
+          {
+            $facet: {
+              items: [{ $skip: page * limit }, { $limit: limit }],
+              totalCount: [{ $count: "count" }],
+              statusCounts: [
+                { $group: { _id: "$status", count: { $sum: 1 } } },
+              ],
+            },
+          },
         ])
         .toArray();
 
-      const length = await collection.countDocuments(query);
-      return paginate({ items, page, limit, length });
+      const length = result.totalCount[0]?.count ?? 0;
+
+      const statusCounts = result.statusCounts.reduce((acc, { _id, count }) => {
+        acc[_id] = count;
+        return acc;
+      }, {});
+
+      return {
+        ...paginate({ items: result.items, page, limit, length }),
+        statusCounts,
+        total: length,
+      };
     } catch (error) {
       throw new Error("Failed to fetch applications: " + error.message);
     }

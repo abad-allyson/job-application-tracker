@@ -24,7 +24,7 @@
             <v-card-text
               class="text-display-large text-align-center text-my-font-color font-weight-medium"
             >
-              {{ items.length }}
+              {{ total }}
             </v-card-text>
           </v-card>
         </v-col>
@@ -258,6 +258,8 @@ const items = ref([]);
 const page = ref(1);
 const pages = ref(1);
 const pageRange = ref([]);
+const total = ref();
+const statusCounts = ref({});
 
 const {
   data: applicationsData,
@@ -274,6 +276,8 @@ watchEffect(() => {
     items.value = applicationsData.value.items;
     pages.value = applicationsData.value.pages;
     pageRange.value = applicationsData.value.pageRange;
+    total.value = applicationsData.value.total;
+    statusCounts.value = applicationsData.value.statusCounts;
   }
 });
 
@@ -371,6 +375,7 @@ async function handleStatusChange(id, status) {
   try {
     console.log("id:", id, "status:", status);
     await updateStatus({ id, status });
+    await refreshApplications();
   } catch (error) {
     console.error("Failed to update status:", error);
   }
