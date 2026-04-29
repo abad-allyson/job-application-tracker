@@ -11,30 +11,19 @@ export function useAuthService() {
   const { setCache } = useCache("sessions");
 
   async function login({ email, password } = {}) {
-    // Validate credentials using schema
-    const validation = Joi.object({
-      email: Joi.string().email().required(),
-      password: Joi.string().min(4).required(),
-    });
-
-    const { error } = validation.validate({ email, password });
-    if (error) {
-      throw new BadRequestError(error.details);
-    }
-
     try {
       // Get user by email to check if user exists, return invalid email if not found
       const user = await getByEmail(email);
 
       if (!user) {
-        throw new NotFoundError("Invalid email.");
+        throw new NotFoundError("Email not found");
       }
 
       // If user exists, hash the password and compare it, else, return an error invalid password
       const isPasswordValid = await comparePassword(password, user.password);
 
       if (!isPasswordValid) {
-        throw new BadRequestError("Invalid password");
+        throw new BadRequestError("Incorrect password");
       }
 
       // If password matched, create session id

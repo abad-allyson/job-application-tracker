@@ -15,7 +15,7 @@ export function useAuthController() {
     const { error } = validation.validate(req.body);
 
     if (error) {
-      next(new BadRequestError(error.details));
+      throw new BadRequestError("Invalid email");
     }
 
     try {
