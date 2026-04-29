@@ -96,7 +96,7 @@
             :disabled="!valid"
             @click="handleSave"
           >
-            Save
+            {{ props.mode === "update" ? "Save Changes" : "Save" }}
           </v-btn>
         </v-col>
       </v-row>
@@ -114,8 +114,6 @@ const props = defineProps({
   workTypeOptions: { type: Array, required: true },
   mode: { type: String, default: "add" },
 });
-
-const title = ref("");
 
 const emit = defineEmits(["cancel", "save"]);
 

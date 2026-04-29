@@ -256,7 +256,7 @@ const jobApplication = ref({
 
 const items = ref([]);
 const page = ref(1);
-const pages = ref(0);
+const pages = ref(1);
 const pageRange = ref([]);
 
 const {
@@ -279,8 +279,10 @@ watchEffect(() => {
 
 const loading = computed(() => applicationsReqStatus.value === "pending");
 const statusColors = {
-  applied: "primary-darken-1",
-  interviewing: "warning",
+  applied: "secondary-darken-1",
+  "for-interview": "warning",
+  "for-assessment": "waiting",
+  "awaiting-feedback": "info",
   "offer-received": "success",
   rejected: "error",
 };
@@ -291,8 +293,16 @@ const statusOptions = [
     value: "applied",
   },
   {
-    label: "Interviewing",
-    value: "interviewing",
+    label: "For Interview",
+    value: "for-interview",
+  },
+  {
+    label: "For Assessment",
+    value: "for-assessment",
+  },
+  {
+    label: "Awaiting Feedback",
+    value: "awaiting-feedback",
   },
   {
     label: "Offer Received",

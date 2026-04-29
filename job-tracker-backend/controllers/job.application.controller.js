@@ -115,7 +115,14 @@ export function useJobApplicationController() {
     const validation = Joi.object({
       id: Joi.string().hex().length(24).required(),
       status: Joi.string()
-        .valid("applied", "interviewing", "offer-received", "rejected")
+        .valid(
+          "applied",
+          "for-interview",
+          "for-assessment",
+          "awaiting-feedback",
+          "offer-received",
+          "rejected",
+        )
         .required(),
     });
     const { error } = validation.validate(payload);
