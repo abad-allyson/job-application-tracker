@@ -1,11 +1,16 @@
 <template>
   <v-app>
-    <v-navigation-drawer permanent class="px-5">
+    <v-app-bar v-if="$vuetify.display.mobile" color="primary" elevation="0">
+      <v-app-bar-nav-icon
+        variant="text"
+        @click.stop="drawer = !drawer"
+      ></v-app-bar-nav-icon>
+    </v-app-bar>
+    <v-navigation-drawer v-model="drawer" class="px-5">
       <v-list color="secondary-darken-1">
-        <v-list-item>
+        <v-list-item v-if="$vuetify.display.mdAndUp">
           <v-list-item-title
-            class="font-weight-bold text-title-large py-2 mt-1 d-flex align-center ga-1"
-            ><v-icon>mdi-briefcase-edit-outline</v-icon
+            class="font-weight-bold text-title-large py-2 mt-1 text-center"
             >JobTracker</v-list-item-title
           >
         </v-list-item>
@@ -45,6 +50,10 @@
 function logout() {
   navigateTo({ name: "logout" });
 }
+
+import { BriefcaseBusiness } from "@lucide/vue";
+
+const drawer = ref(false);
 
 import { useRoute } from "vue-router";
 const route = useRoute();
