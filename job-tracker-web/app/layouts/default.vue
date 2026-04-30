@@ -51,9 +51,7 @@ function logout() {
   navigateTo({ name: "logout" });
 }
 
-import { BriefcaseBusiness } from "@lucide/vue";
-
-const drawer = ref(false);
+const drawer = ref(true);
 
 import { useRoute } from "vue-router";
 const route = useRoute();

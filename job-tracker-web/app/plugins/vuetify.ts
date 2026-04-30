@@ -15,7 +15,7 @@ export default defineNuxtPlugin((app) => {
       "surface-variant": "#7c7c7c",
       "on-surface-variant": "#EEEEEE",
       "my-font-color": "#242424",
-      primary: "#e0e7f1",
+      primary: "#e6e4f5",
       "primary-darken-1": "#1f2192",
       secondary: "#37367a",
       "secondary-darken-1": "#3d2770",
