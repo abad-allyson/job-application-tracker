@@ -94,17 +94,17 @@
           <v-col cols="12">
             <span class="text-title-medium">{{ dayToday }} </span>
           </v-col>
-          <v-col cols="12" class="mt-2">
+          <v-col cols="12">
             <span class="text-display-small font-weight-bold"
               >{{ dateToday }}
             </span>
           </v-col>
           <v-col cols="12" class="mt-2">
-            <span class="text-title-medium font-italic text-secondary"
+            <span class="text-title-small font-italic text-secondary"
               >{{ dailyQuote.text }}
             </span>
             <br />
-            <span class="text-title-medium font-italic"
+            <span class="text-title-small font-italic"
               >- {{ dailyQuote.author }}
             </span>
           </v-col>
