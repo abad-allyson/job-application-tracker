@@ -11,21 +11,125 @@
 
       <!-- Stat Cards -->
       <v-row>
-        <v-col>
+        <v-col cols="12" lg="2">
           <v-card
-            height="150"
-            width="200"
-            class="text-center pt-4 rounded-xl"
+            min-height="190"
+            class="text-center rounded-xl pt-6"
             elevation="0"
           >
             <v-card-title class="text-title-small text-grey-darken-1"
               >Total Job Applications</v-card-title
             >
             <v-card-text
-              class="text-display-large text-align-center text-my-font-color font-weight-medium"
+              class="text-display-large text-my-font-color font-weight-medium mt-4"
             >
               {{ total }}
             </v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" lg="6">
+          <v-card
+            class="text-center rounded-xl pa-4 d-flex align-center"
+            elevation="0"
+            min-height="160"
+          >
+            <v-row class="fill-height" align="center">
+              <v-col cols="12" md="4">
+                <v-card
+                  elevation="0"
+                  color="secondary-darken-1"
+                  variant="tonal"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-label-medium">Applied</v-card-title>
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["applied"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-card
+                  elevation="0"
+                  color="error"
+                  variant="tonal"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-label-medium"
+                    >Rejected</v-card-title
+                  >
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["rejected"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-card
+                  elevation="0"
+                  color="success"
+                  variant="tonal"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-label-medium"
+                    >Offer Received</v-card-title
+                  >
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["offer-received"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-card
+                  elevation="0"
+                  color="warning"
+                  variant="tonal"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-label-medium"
+                    >For Interview</v-card-title
+                  >
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["for-interview"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-card
+                  elevation="0"
+                  color="orange"
+                  variant="tonal"
+                  rounded="lg"
+                >
+                  <v-card-title class="text-label-medium"
+                    >For Assessment</v-card-title
+                  >
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["for-assessment"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+
+              <v-col cols="12" md="4">
+                <v-card elevation="0" color="info" variant="tonal" rounded="lg">
+                  <v-card-title class="text-label-medium"
+                    >Awaiting Feedback</v-card-title
+                  >
+
+                  <v-card-text class="font-weight-bold">
+                    {{ statusCounts["awaiting-feedback"] || "0" }}</v-card-text
+                  >
+                </v-card>
+              </v-col>
+            </v-row>
           </v-card>
         </v-col>
       </v-row>
@@ -54,7 +158,7 @@
               :headers="headers"
               :items="items"
               hide-default-footer
-              height="530"
+              height="500"
               fixed-header
               hover
               items-per-page="15"
@@ -149,6 +253,7 @@
         v-model="showDetailsDrawer"
         location="right"
         width="350"
+        permanent
       >
         <JobApplicationDetails
           :selected-row="selectedRow"
@@ -259,33 +364,14 @@ const page = ref(1);
 const pages = ref(1);
 const pageRange = ref([]);
 const total = ref();
+const selectedRow = ref(null);
+
 const statusCounts = ref({});
 
-const {
-  data: applicationsData,
-  status: applicationsReqStatus,
-  refresh: refreshApplications,
-} = useLazyAsyncData(
-  `get-all-job-applications-page-${page.value}`,
-  () => getByUserId({ page: page.value, userId: userId.value }),
-  { watch: [page], server: false },
-);
-
-watchEffect(() => {
-  if (applicationsData.value) {
-    items.value = applicationsData.value.items;
-    pages.value = applicationsData.value.pages;
-    pageRange.value = applicationsData.value.pageRange;
-    total.value = applicationsData.value.total;
-    statusCounts.value = applicationsData.value.statusCounts;
-  }
-});
-
-const loading = computed(() => applicationsReqStatus.value === "pending");
 const statusColors = {
   applied: "secondary-darken-1",
   "for-interview": "warning",
-  "for-assessment": "waiting",
+  "for-assessment": "orange",
   "awaiting-feedback": "info",
   "offer-received": "success",
   rejected: "error",
@@ -317,8 +403,31 @@ const statusOptions = [
     value: "rejected",
   },
 ];
+
 const workSetupOptions = ["Remote", "Hybrid", "On-site"];
 const workTypeOptions = ["Full-time", "Part-time", "Contract", "Internship"];
+
+const {
+  data: applicationsData,
+  status: applicationsReqStatus,
+  refresh: refreshApplications,
+} = useLazyAsyncData(
+  `get-all-job-applications-page-${page.value}`,
+  () => getByUserId({ page: page.value, userId: userId.value }),
+  { watch: [page], server: false },
+);
+
+watchEffect(() => {
+  if (applicationsData.value) {
+    items.value = applicationsData.value.items;
+    pages.value = applicationsData.value.pages;
+    pageRange.value = applicationsData.value.pageRange;
+    total.value = applicationsData.value.total;
+    statusCounts.value = applicationsData.value.statusCounts;
+  }
+});
+
+const loading = computed(() => applicationsReqStatus.value === "pending");
 
 function handleAddDialog() {
   jobApplication.value = {
@@ -339,8 +448,6 @@ function handleCancel() {
   showUpdateDialog.value = false;
   showDeleteConfirmation.value = false;
 }
-
-const selectedRow = ref(null);
 
 function handleUpdateDialog() {
   jobApplication.value = { ...selectedRow.value };

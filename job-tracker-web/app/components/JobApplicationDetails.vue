@@ -34,7 +34,7 @@
         <v-col>
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1">mdi-label-outline</v-icon>
+              <Tag color="#757575" size="20px" />
               <span class="text-grey-darken-1">Status</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -50,7 +50,7 @@
 
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1">mdi-map-marker-outline</v-icon>
+              <MapPin color="#757575" size="20px" />
               <span class="text-grey-darken-1">Location</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -60,7 +60,7 @@
 
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1">mdi-monitor</v-icon>
+              <LaptopMinimal color="#757575" size="20px" />
               <span class="text-grey-darken-1">Work Setup</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -70,9 +70,7 @@
 
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1"
-                >mdi-clock-time-three-outline</v-icon
-              >
+              <ClipboardClockIcon color="#757575" size="20px" />
               <span class="text-grey-darken-1">Work Type</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -82,7 +80,7 @@
 
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1">mdi-cash</v-icon>
+              <Banknote color="#757575" size="20px" />
               <span class="text-grey-darken-1">Monthly Salary</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -94,7 +92,7 @@
 
           <v-row align="center">
             <v-col cols="6" class="d-flex align-center ga-2">
-              <v-icon color="grey-darken-1">mdi-link-variant</v-icon>
+              <Link2 color="#757575" size="20px" />
               <span class="text-grey-darken-1">Job Link</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
@@ -147,6 +145,14 @@
 </template>
 
 <script setup>
+import {
+  Banknote,
+  Link2,
+  MapPin,
+  LaptopMinimal,
+  ClipboardClockIcon,
+  Tag,
+} from "@lucide/vue";
 const props = defineProps({
   selectedRow: {
     type: Object,
