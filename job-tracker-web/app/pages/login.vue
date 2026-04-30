@@ -4,7 +4,7 @@
       <v-card class="pa-4" elevation="2" width="400">
         <v-card-title class="text-center font-weight-bold">Login</v-card-title>
         <v-card-text>
-          <v-form v-model="valid">
+          <v-form v-model="valid" @keydown.enter.exact="login()">
             <v-row no-gutters>
               <v-col>
                 <InputLabel title="Email" />
@@ -40,7 +40,7 @@
             <v-row no-gutters>
               <v-col cols="12">
                 <v-btn
-                  color="secondary"
+                  color="secondary-darken-1"
                   class="mt-4"
                   block
                   variant="flat"

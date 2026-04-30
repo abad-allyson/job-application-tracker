@@ -34,8 +34,8 @@
         ></v-col>
       </v-row>
 
+      <!-- List View -->
       <v-row no-gutters>
-        <!-- List View -->
         <v-col cols="12">
           <v-card class="rounded-lg" elevation="0">
             <v-data-table
@@ -94,6 +94,10 @@
                     </v-list-item>
                   </template>
                 </v-select>
+              </template>
+
+              <template #item.salary="{ item }">
+                {{ item.salary ? `₱ ${item.salary}` : "" }}
               </template>
             </v-data-table>
           </v-card>

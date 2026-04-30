@@ -13,7 +13,7 @@
     <v-divider />
 
     <v-card-text>
-      <v-form v-model="valid">
+      <v-form v-model="valid" @keydown.enter.exact="handleSave()">
         <v-row no-gutters>
           <v-col cols="12">
             <InputLabel title="Company" required />

@@ -81,7 +81,7 @@
             </v-col>
             <v-col cols="6" class="d-flex align-center">
               <span class="ml-2 text-break">{{
-                `₱ ${selectedRow?.salary}`
+                selectedRow?.salary ? `₱ ${selectedRow?.salary}` : ""
               }}</span>
             </v-col>
           </v-row>
@@ -116,7 +116,7 @@
                 class="my-2"
               >
                 <v-card-text>
-                  <span class="text-break text-black">{{
+                  <span class="text-break text-black text-pre-wrap">{{
                     selectedRow?.notes
                   }}</span>
                 </v-card-text>

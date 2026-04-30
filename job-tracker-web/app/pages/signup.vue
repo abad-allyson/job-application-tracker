@@ -6,7 +6,7 @@
           >Sign Up</v-card-title
         >
         <v-card-text>
-          <v-form v-model="valid">
+          <v-form v-model="valid" @keydown.enter.exact="signup()">
             <v-row no-gutters>
               <v-col>
                 <InputLabel title="First Name" required />
@@ -91,7 +91,7 @@
             <v-row no-gutters>
               <v-col>
                 <v-btn
-                  color="secondary"
+                  color="secondary-darken-1"
                   class="mt-4 font-weight-medium"
                   block
                   variant="flat"
