@@ -92,12 +92,19 @@
               <span class="text-grey-darken-1">Job Link</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
-              <a
-                :href="selectedRow?.link"
-                class="ml-2 text-break"
-                target="_blank"
-                >{{ selectedRow?.link }}</a
-              >
+              <v-tooltip :text="selectedRow?.link" location="top">
+                <template #activator="{ props }">
+                  <nuxt-link
+                    :to="selectedRow?.link"
+                    target="_blank"
+                    v-bind="props"
+                    class="d-inline-block text-truncate text-info"
+                    style="max-width: 150px"
+                  >
+                    {{ selectedRow?.link }}
+                  </nuxt-link>
+                </template>
+              </v-tooltip>
             </v-col>
           </v-row>
 

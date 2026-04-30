@@ -50,21 +50,6 @@
               density="comfortable"
               @click:row="handleShowDrawer"
             >
-              <!-- Truncate long text with tooltip -->
-              <template #item.link="{ value }">
-                <v-tooltip :text="value" location="top">
-                  <template #activator="{ props }">
-                    <span
-                      v-bind="props"
-                      class="d-inline-block text-truncate"
-                      style="max-width: 150px"
-                    >
-                      {{ value }}
-                    </span>
-                  </template>
-                </v-tooltip>
-              </template>
-
               <!-- Status chip with color -->
               <template #item.status="{ item }">
                 <v-select
@@ -230,7 +215,6 @@ const headers = [
   { title: "Work Setup", key: "workSetup" },
   { title: "Work Type", key: "workType" },
   { title: "Salary", key: "salary" },
-  { title: "Link", key: "link" },
 ];
 
 const statusColors = {
