@@ -72,7 +72,10 @@ export function useUserRepo() {
     }
 
     try {
-      return await collection.findOne({});
+      return await collection.findOne(
+        { _id: id },
+        { projection: { firstName: 1, lastName: 1 } },
+      );
     } catch (error) {
       throw new Error("Failed to get by id: " + error.message);
     }

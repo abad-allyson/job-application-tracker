@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar v-if="$vuetify.display.mobile" color="primary" elevation="0">
+    <v-app-bar v-if="$vuetify.display.mobile" color="background" elevation="0">
       <v-app-bar-nav-icon
         variant="text"
         @click.stop="drawer = !drawer"
@@ -8,19 +8,24 @@
     </v-app-bar>
 
     <ClientOnly>
-      <v-navigation-drawer v-model="drawer" class="px-5">
+      <v-navigation-drawer v-model="drawer">
         <v-list color="secondary-darken-1">
-          <v-list-item v-if="$vuetify.display.mdAndUp">
-            <v-list-item-title
-              class="font-weight-bold text-title-large py-2 mt-1 text-center"
-              >JobTracker</v-list-item-title
-            >
+          <v-list-item>
+            <template #prepend>
+              <v-avatar color="secondary-darken-1" variant="tonal" size="large">
+                {{ initials }}
+              </v-avatar>
+            </template>
+            <v-list-item-title class="text-title-medium font-weight-bold">
+              {{ user.firstName }} {{ user.lastName }}
+            </v-list-item-title>
           </v-list-item>
-          <v-divider></v-divider>
+
+          <v-divider class="my-2"></v-divider>
           <v-list-item
             link
             value="dashboard"
-            class="mt-2"
+            class="mt-2 mx-4"
             :active="isInDashboard()"
           >
             <template #title
@@ -31,7 +36,7 @@
               <v-icon size="small">mdi-table</v-icon>
             </template>
           </v-list-item>
-          <v-list-item link @click="logout()">
+          <v-list-item link class="mt-2 mx-4" @click="logout()">
             <template #title
               ><span class="text-label-large">Logout</span>
             </template>
@@ -70,4 +75,19 @@ function isInDashboard() {
 function logout() {
   navigateTo({ name: "logout" });
 }
+
+const { getById: getUser } = useUser();
+
+const user = ref({});
+const userId = computed(() => route.params.id);
+
+onMounted(async () => {
+  user.value = await getUser(userId.value);
+});
+
+const initials = computed(() => {
+  const first = user.value?.firstName?.charAt(0) ?? "";
+  const last = user.value?.lastName?.charAt(0) ?? "";
+  return (first + last).toUpperCase();
+});
 </script>

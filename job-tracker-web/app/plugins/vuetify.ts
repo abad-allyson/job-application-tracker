@@ -19,7 +19,7 @@ export default defineNuxtPlugin((app) => {
       "primary-darken-1": "#1f2192",
       secondary: "#37367a",
       "secondary-darken-1": "#3d2770",
-      error: "#b3243e",
+      error: "#aa3434",
       info: "#3a5da7",
       success: "#417442",
       warning: "#d67804",

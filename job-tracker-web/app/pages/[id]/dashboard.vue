@@ -35,18 +35,19 @@
       </v-row>
 
       <!-- List View -->
-      <v-row no-gutters>
+      <v-row no-gutters align="stretch">
         <v-col cols="12">
           <v-card class="rounded-lg" elevation="0">
             <v-data-table
               :headers="headers"
               :items="items"
               hide-default-footer
-              height="500"
+              height="480"
               fixed-header
               hover
               items-per-page="15"
               :loading="loading"
+              density="comfortable"
               @click:row="handleShowDrawer"
             >
               <!-- Truncate long text with tooltip -->
@@ -104,9 +105,6 @@
 
           <!-- Table Footer -->
           <v-row class="d-flex justify-end align-center mt-2 ga-3">
-            <span class="text-label-large text-grey-darken-1">{{
-              pageRange
-            }}</span>
             <v-btn
               size="small"
               variant="tonal"
@@ -115,6 +113,10 @@
             >
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
+            <span class="text-label-large text-grey-darken-1">{{
+              pageRange
+            }}</span>
+
             <v-btn
               size="small"
               variant="tonal"

@@ -1,11 +1,7 @@
 <template>
-  <v-row>
-    <v-col cols="12" lg="2">
-      <v-card
-        min-height="192"
-        class="text-center rounded-lg pt-6"
-        elevation="0"
-      >
+  <v-row align="stretch">
+    <v-col cols="12" xl="2">
+      <v-card class="text-center rounded-lg pt-6 h-100" elevation="0">
         <v-card-title class="text-title-medium text-grey-darken-1"
           >Total Applications</v-card-title
         >
@@ -17,13 +13,12 @@
       </v-card>
     </v-col>
 
-    <v-col cols="12" lg="6">
+    <v-col cols="12" xl="6">
       <v-card
-        class="text-center rounded-lg pa-4 d-flex align-center"
+        class="text-center rounded-lg pa-4 d-flex align-center h-100"
         elevation="0"
-        min-height="160"
       >
-        <v-row class="fill-height" align="center" dense>
+        <v-row class="fill-height" align="center" density="comfortable">
           <v-col cols="12" md="4">
             <v-card
               elevation="0"
@@ -93,12 +88,8 @@
         </v-row>
       </v-card>
     </v-col>
-    <v-col cols="12" lg="4">
-      <v-card
-        min-height="192"
-        class="text-center rounded-lg pa-6"
-        elevation="0"
-      >
+    <v-col cols="12" xl="4">
+      <v-card class="text-center rounded-lg pa-6 h-100" elevation="0">
         <v-row class="fill-height" align="center" no-gutters>
           <v-col cols="12">
             <span class="text-title-medium">{{ dayToday }} </span>

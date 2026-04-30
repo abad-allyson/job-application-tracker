@@ -2,7 +2,7 @@ export function useApplication() {
   function getByUserId({
     page = 1,
     search = "",
-    limit = 20,
+    limit = 15,
     userId = "",
   } = {}) {
     return $fetch("/api/job-applications", {
