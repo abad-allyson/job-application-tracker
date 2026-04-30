@@ -2,7 +2,9 @@
 
 A full-stack web application for tracking job applications throughout the job search process.
 
----
+## Dashboard
+
+## ![Dashboard](./screenshots/dashboard.png)
 
 ## 📋 Table of Contents
 
