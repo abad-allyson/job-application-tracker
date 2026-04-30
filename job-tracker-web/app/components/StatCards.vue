@@ -2,7 +2,7 @@
   <v-row>
     <v-col cols="12" lg="2">
       <v-card
-        min-height="190"
+        min-height="192"
         class="text-center rounded-lg pt-6"
         elevation="0"
       >
@@ -23,7 +23,7 @@
         elevation="0"
         min-height="160"
       >
-        <v-row class="fill-height" align="center">
+        <v-row class="fill-height" align="center" dense>
           <v-col cols="12" md="4">
             <v-card
               elevation="0"
@@ -32,20 +32,18 @@
               rounded="lg"
             >
               <v-card-title class="text-label-medium">Applied</v-card-title>
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["applied"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["applied"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
 
           <v-col cols="12" md="4">
             <v-card elevation="0" color="error" variant="tonal" rounded="lg">
               <v-card-title class="text-label-medium">Rejected</v-card-title>
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["rejected"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["rejected"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
 
@@ -54,10 +52,9 @@
               <v-card-title class="text-label-medium"
                 >Offer Received</v-card-title
               >
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["offer-received"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["offer-received"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
 
@@ -66,10 +63,9 @@
               <v-card-title class="text-label-medium"
                 >For Interview</v-card-title
               >
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["for-interview"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["for-interview"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
 
@@ -78,10 +74,9 @@
               <v-card-title class="text-label-medium"
                 >For Assessment</v-card-title
               >
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["for-assessment"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["for-assessment"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
 
@@ -90,16 +85,14 @@
               <v-card-title class="text-label-medium"
                 >Awaiting Feedback</v-card-title
               >
-
-              <v-card-text class="font-weight-bold">
-                {{ statusCounts["awaiting-feedback"] || "0" }}</v-card-text
-              >
+              <v-card-text class="font-weight-bold text-title-large">
+                {{ statusCounts["awaiting-feedback"] || "0" }}
+              </v-card-text>
             </v-card>
           </v-col>
         </v-row>
       </v-card>
     </v-col>
-
     <v-col cols="12" lg="4">
       <v-card
         min-height="192"
@@ -110,12 +103,12 @@
           <v-col cols="12">
             <span class="text-title-medium">{{ dayToday }} </span>
           </v-col>
-          <v-col cols="12" class="mt-4">
+          <v-col cols="12" class="mt-2">
             <span class="text-display-small font-weight-bold"
               >{{ dateToday }}
             </span>
           </v-col>
-          <v-col cols="12" class="mt-4">
+          <v-col cols="12" class="mt-2">
             <span class="text-title-medium font-italic text-secondary"
               >{{ dailyQuote.text }}
             </span>

@@ -13,26 +13,28 @@
       <StatCards :total="total" :status-counts="statusCounts" />
 
       <v-row>
-        <v-col cols="12">
-          <ClientOnly>
-            <v-tooltip location="end" text="Add new job application">
-              <template #activator="{ props }">
-                <v-btn
-                  v-bind="props"
-                  color="primary-darken-1"
-                  variant="tonal"
-                  icon="mdi-plus"
-                  density="comfortable"
-                  class="rounded-xl"
-                  @click="handleAddDialog"
-                />
-              </template>
-            </v-tooltip>
-          </ClientOnly>
+        <v-col>
+          <v-btn
+            color="secondary-darken-1"
+            variant="tonal"
+            prepend-icon="mdi-plus"
+            @click="handleAddDialog"
+          >
+            Add job application</v-btn
+          >
         </v-col>
+        <v-col cols="12" md="4"
+          ><v-text-field
+            v-model="search"
+            @keydown.enter="searchApplication()"
+            bg-color="surface"
+            rounded
+            placeholder="Search"
+          ></v-text-field
+        ></v-col>
       </v-row>
 
-      <v-row>
+      <v-row no-gutters>
         <!-- List View -->
         <v-col cols="12">
           <v-card class="rounded-lg" elevation="0">
@@ -95,6 +97,8 @@
               </template>
             </v-data-table>
           </v-card>
+
+          <!-- Table Footer -->
           <v-row class="d-flex justify-end align-center mt-2 ga-3">
             <span class="text-label-large text-grey-darken-1">{{
               pageRange
@@ -136,14 +140,14 @@
         v-model="showDetailsDrawer"
         location="right"
         width="350"
-        permanent
       >
         <JobApplicationDetails
           :selected-row="selectedRow"
           :status-colors="statusColors"
+          :status-options="statusOptions"
           @delete="handleDeleteConfirmation"
           @update="handleUpdateDialog"
-          v-model:show-drawer="showDetailsDrawer"
+          @close="handleCancel"
         />
       </v-navigation-drawer>
 
@@ -207,7 +211,6 @@ useHead({
   title: "Dashboard | JobTracker",
 });
 
-import { ref } from "vue";
 import JobApplicationForm from "~/components/JobApplicationForm.vue";
 import JobApplicationDetails from "~/components/JobApplicationDetails.vue";
 import ConfirmDelete from "~/components/ConfirmDelete.vue";
@@ -223,37 +226,6 @@ const headers = [
   { title: "Salary", key: "salary" },
   { title: "Link", key: "link" },
 ];
-
-const showAddDialog = ref(false);
-const showUpdateDialog = ref(false);
-const showDetailsDrawer = ref(false);
-const snackbarDelete = ref(false);
-const snackbarUpdate = ref(false);
-const showDeleteConfirmation = ref(false);
-
-const route = useRoute();
-const { addJobApplication, getByUserId, updateStatus, deleteById, updateById } =
-  useApplication();
-const userId = computed(() => route.params.id);
-
-const jobApplication = ref({
-  company: "",
-  jobTitle: "",
-  location: "",
-  workSetup: "",
-  workType: "",
-  salary: "",
-  link: "",
-  notes: "",
-});
-
-const items = ref([]);
-const page = ref(1);
-const pages = ref(1);
-const pageRange = ref([]);
-const total = ref();
-const selectedRow = ref(null);
-const statusCounts = ref({});
 
 const statusColors = {
   applied: "secondary-darken-1",
@@ -294,13 +266,50 @@ const statusOptions = [
 const workSetupOptions = ["Remote", "Hybrid", "On-site"];
 const workTypeOptions = ["Full-time", "Part-time", "Contract", "Internship"];
 
+const showAddDialog = ref(false);
+const showUpdateDialog = ref(false);
+const showDetailsDrawer = ref(false);
+const snackbarDelete = ref(false);
+const snackbarUpdate = ref(false);
+const showDeleteConfirmation = ref(false);
+
+const route = useRoute();
+const { addJobApplication, getByUserId, updateStatus, deleteById, updateById } =
+  useApplication();
+const userId = computed(() => route.params.id);
+
+const jobApplication = ref({
+  company: "",
+  jobTitle: "",
+  location: "",
+  workSetup: "",
+  workType: "",
+  salary: "",
+  link: "",
+  notes: "",
+});
+
+const items = ref([]);
+const page = ref(1);
+const pages = ref(1);
+const pageRange = ref([]);
+const total = ref();
+const selectedRow = ref(null);
+const statusCounts = ref({});
+const search = ref("");
+
 const {
   data: applicationsData,
   status: applicationsReqStatus,
   refresh: refreshApplications,
 } = useLazyAsyncData(
   `get-all-job-applications-page-${page.value}`,
-  () => getByUserId({ page: page.value, userId: userId.value }),
+  () =>
+    getByUserId({
+      page: page.value,
+      userId: userId.value,
+      search: search.value,
+    }),
   { watch: [page], server: false },
 );
 
@@ -334,6 +343,7 @@ function handleCancel() {
   showAddDialog.value = false;
   showUpdateDialog.value = false;
   showDeleteConfirmation.value = false;
+  showDetailsDrawer.value = false;
 }
 
 function handleUpdateDialog() {
@@ -404,4 +414,16 @@ async function handleUpdate(formData) {
     console.error("Error adding application:", error);
   }
 }
+
+function searchApplication() {
+  page.value = 1;
+  refreshApplications();
+}
+
+watch(search, (val) => {
+  if (val === "") {
+    page.value = 1;
+    refreshApplications();
+  }
+});
 </script>

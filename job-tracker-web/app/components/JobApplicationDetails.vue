@@ -18,11 +18,7 @@
           </v-row>
         </v-toolbar-title>
         <template #append>
-          <v-btn
-            icon="mdi-close"
-            variant="plain"
-            @click="emit('update:showDrawer', false)"
-          />
+          <v-btn icon="mdi-close" variant="plain" @click="emit('close')" />
         </template>
       </v-toolbar>
       <v-divider />
@@ -43,7 +39,7 @@
                 class="text-capitalize"
                 size="small"
               >
-                {{ selectedRow?.status }}
+                {{ statusLabel }}
               </v-chip>
             </v-col>
           </v-row>
@@ -96,9 +92,12 @@
               <span class="text-grey-darken-1">Job Link</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
-              <nuxt-link :to="selectedRow?.link" class="ml-2 text-break">{{
-                selectedRow?.link
-              }}</nuxt-link>
+              <a
+                :href="selectedRow?.link"
+                class="ml-2 text-break"
+                target="_blank"
+                >{{ selectedRow?.link }}</a
+              >
             </v-col>
           </v-row>
 
@@ -167,7 +166,15 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  statusOptions: { type: Array, default: () => [] },
 });
 
-const emit = defineEmits(["cancel", "delete", "update"]);
+const emit = defineEmits(["cancel", "delete", "update", "close"]);
+
+const statusLabel = computed(() => {
+  const found = props.statusOptions.find(
+    (s) => s.value === props.selectedRow?.status,
+  );
+  return found ? found.label : props.selectedRow?.status;
+});
 </script>
