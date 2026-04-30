@@ -4,7 +4,7 @@ A full-stack web application for tracking job applications throughout the job se
 
 ## Dashboard
 
-## ![Dashboard](./screenshots/dashboard.png)
+## ![Dashboard](./job-tracker-web/screenshots/dashboard.png)
 
 ## 📋 Table of Contents
 
