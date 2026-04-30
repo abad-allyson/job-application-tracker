@@ -20,7 +20,7 @@ export function useJobApplicationController() {
     const page = req.query.page ? parseInt(req.query.page) : 1;
     const search = req.query.search ?? "";
     const userId = req.query.userId ?? "";
-    const limit = req.query.limit ?? 20;
+    const limit = req.query.limit ?? 10;
     try {
       const items = await _getByUserId({ page, search, userId, limit });
       res.status(200).json(items);
