@@ -22,6 +22,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     "/api/**": { proxy: `${process.env.API}/api/**` },
+    "/:id/dashboard": { ssr: false },
   },
 
   runtimeConfig: {

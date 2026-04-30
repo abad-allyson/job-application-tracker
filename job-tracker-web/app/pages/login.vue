@@ -2,29 +2,59 @@
   <v-row align="center" justify="center" class="fill-height">
     <v-col cols="12" class="d-flex justify-center">
       <v-card class="pa-4" elevation="2" width="400">
-        <v-card-title class="text-center">Login</v-card-title>
+        <v-card-title class="text-center font-weight-bold">Login</v-card-title>
         <v-card-text>
-          <v-form>
-            <v-text-field
-              v-model="email"
-              label="Email"
-              type="email"
-              required
-            ></v-text-field>
-            <v-text-field
-              v-model="password"
-              label="Password"
-              type="password"
-              required
-            ></v-text-field>
-            <v-btn
-              color="secondary"
-              class="mt-4"
-              block
-              variant="flat"
-              @click="login()"
-              >Login</v-btn
-            >
+          <v-form v-model="valid">
+            <v-row no-gutters>
+              <v-col>
+                <InputLabel title="Email" />
+                <v-text-field
+                  v-model="email"
+                  type="email"
+                  :rules="[requiredRule]"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row no-gutters>
+              <v-col>
+                <InputLabel title="Password" />
+                <v-text-field
+                  v-model="password"
+                  :type="showPassword ? 'text' : 'password'"
+                  :rules="[requiredRule]"
+                  :append-inner-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                  @click:append-inner="showPassword = !showPassword"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+
+            <v-row no-gutters>
+              <v-col cols="12" class="text-center">
+                <span class="text-error font-weight-bold font-italic">{{
+                  message
+                }}</span>
+              </v-col>
+            </v-row>
+
+            <v-row no-gutters>
+              <v-col cols="12">
+                <v-btn
+                  color="secondary"
+                  class="mt-4"
+                  block
+                  variant="flat"
+                  :disabled="!valid"
+                  @click="login()"
+                  >Login</v-btn
+                >
+              </v-col>
+              <v-col cols="12" class="text-center mt-2">
+                <span
+                  >Don't have an account? <a href="/signup">Sign up</a></span
+                >
+              </v-col>
+            </v-row>
           </v-form>
         </v-card-text>
       </v-card>
@@ -37,6 +67,13 @@ definePageMeta({
   layout: "plain",
 });
 
+useHead({
+  title: "Login",
+});
+
+const { requiredRule } = useUtils();
+
+const valid = ref(true);
 const email = ref("");
 const password = ref("");
 
@@ -55,7 +92,7 @@ async function login() {
     useCookie("user", cookieConfig).value = data.user;
 
     console.log("navigating to dashboard");
-    navigateTo({ name: "dashboard" });
+    navigateTo({ name: "id-dashboard", params: { id: data.user } });
   } catch (error) {
     message.value = error.response._data.message;
   }

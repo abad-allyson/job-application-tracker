@@ -11,6 +11,10 @@ definePageMeta({
   layout: "plain",
 });
 
+useHead({
+  title: "Log Out",
+});
+
 const { cookieConfig } = useRuntimeConfig().public;
 useCookie("sid", cookieConfig).value = null;
 useCookie("user", cookieConfig).value = null;

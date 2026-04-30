@@ -10,150 +10,32 @@
       </v-row>
 
       <!-- Stat Cards -->
+      <StatCards :total="total" :status-counts="statusCounts" />
+
       <v-row>
-        <v-col cols="12" lg="2">
-          <v-card
-            min-height="190"
-            class="text-center rounded-xl pt-6"
-            elevation="0"
-          >
-            <v-card-title class="text-title-small text-grey-darken-1"
-              >Total Job Applications</v-card-title
-            >
-            <v-card-text
-              class="text-display-large text-my-font-color font-weight-medium mt-4"
-            >
-              {{ total }}
-            </v-card-text>
-          </v-card>
-        </v-col>
-
-        <v-col cols="12" lg="6">
-          <v-card
-            class="text-center rounded-xl pa-4 d-flex align-center"
-            elevation="0"
-            min-height="160"
-          >
-            <v-row class="fill-height" align="center">
-              <v-col cols="12" md="4">
-                <v-card
-                  elevation="0"
-                  color="secondary-darken-1"
+        <v-col cols="12">
+          <ClientOnly>
+            <v-tooltip location="end" text="Add new job application">
+              <template #activator="{ props }">
+                <v-btn
+                  v-bind="props"
+                  color="primary-darken-1"
                   variant="tonal"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-label-medium">Applied</v-card-title>
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["applied"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-
-              <v-col cols="12" md="4">
-                <v-card
-                  elevation="0"
-                  color="error"
-                  variant="tonal"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-label-medium"
-                    >Rejected</v-card-title
-                  >
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["rejected"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-
-              <v-col cols="12" md="4">
-                <v-card
-                  elevation="0"
-                  color="success"
-                  variant="tonal"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-label-medium"
-                    >Offer Received</v-card-title
-                  >
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["offer-received"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-
-              <v-col cols="12" md="4">
-                <v-card
-                  elevation="0"
-                  color="warning"
-                  variant="tonal"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-label-medium"
-                    >For Interview</v-card-title
-                  >
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["for-interview"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-
-              <v-col cols="12" md="4">
-                <v-card
-                  elevation="0"
-                  color="orange"
-                  variant="tonal"
-                  rounded="lg"
-                >
-                  <v-card-title class="text-label-medium"
-                    >For Assessment</v-card-title
-                  >
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["for-assessment"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-
-              <v-col cols="12" md="4">
-                <v-card elevation="0" color="info" variant="tonal" rounded="lg">
-                  <v-card-title class="text-label-medium"
-                    >Awaiting Feedback</v-card-title
-                  >
-
-                  <v-card-text class="font-weight-bold">
-                    {{ statusCounts["awaiting-feedback"] || "0" }}</v-card-text
-                  >
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-card>
+                  icon="mdi-plus"
+                  density="comfortable"
+                  class="rounded-xl"
+                  @click="handleAddDialog"
+                />
+              </template>
+            </v-tooltip>
+          </ClientOnly>
         </v-col>
       </v-row>
 
       <v-row>
-        <v-col cols="12">
-          <v-tooltip location="end" text="Add new job application">
-            <template #activator="{ props }">
-              <v-btn
-                v-bind="props"
-                color="primary-darken-1"
-                variant="tonal"
-                icon="mdi-plus"
-                density="comfortable"
-                class="rounded-xl"
-                @click="handleAddDialog"
-              />
-            </template>
-          </v-tooltip>
-        </v-col>
-
         <!-- List View -->
         <v-col cols="12">
-          <v-card class="rounded-lg" elevation="0" :loading="loading">
+          <v-card class="rounded-lg" elevation="0">
             <v-data-table
               :headers="headers"
               :items="items"
@@ -162,6 +44,7 @@
               fixed-header
               hover
               items-per-page="15"
+              :loading="loading"
               @click:row="handleShowDrawer"
             >
               <!-- Truncate long text with tooltip -->
@@ -320,10 +203,15 @@ definePageMeta({
   middleware: "auth",
 });
 
+useHead({
+  title: "Dashboard | JobTracker",
+});
+
 import { ref } from "vue";
 import JobApplicationForm from "~/components/JobApplicationForm.vue";
 import JobApplicationDetails from "~/components/JobApplicationDetails.vue";
 import ConfirmDelete from "~/components/ConfirmDelete.vue";
+import StatCards from "~/components/StatCards.vue";
 
 const headers = [
   { title: "Company", key: "company" },
@@ -365,7 +253,6 @@ const pages = ref(1);
 const pageRange = ref([]);
 const total = ref();
 const selectedRow = ref(null);
-
 const statusCounts = ref({});
 
 const statusColors = {

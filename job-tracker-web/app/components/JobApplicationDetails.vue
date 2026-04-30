@@ -96,9 +96,9 @@
               <span class="text-grey-darken-1">Job Link</span>
             </v-col>
             <v-col cols="6" class="d-flex align-center">
-              <a :href="selectedRow?.link" class="ml-2 text-break">{{
+              <nuxt-link :to="selectedRow?.link" class="ml-2 text-break">{{
                 selectedRow?.link
-              }}</a>
+              }}</nuxt-link>
             </v-col>
           </v-row>
 
@@ -153,6 +153,7 @@ import {
   ClipboardClockIcon,
   Tag,
 } from "@lucide/vue";
+
 const props = defineProps({
   selectedRow: {
     type: Object,

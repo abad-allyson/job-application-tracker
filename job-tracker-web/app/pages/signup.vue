@@ -100,6 +100,13 @@
                   >Sign Up</v-btn
                 >
               </v-col>
+
+              <v-col cols="12" class="text-center mt-2">
+                <span
+                  >Already have an acount?
+                  <NuxtLink to="/login">Login</NuxtLink></span
+                >
+              </v-col>
             </v-row>
           </v-form>
         </v-card-text>
@@ -111,6 +118,10 @@
 <script setup>
 definePageMeta({
   layout: "plain",
+});
+
+useHead({
+  title: "Create Account",
 });
 
 const { requiredRule, emailRule, passwordRule, confirmPasswordRule } =
