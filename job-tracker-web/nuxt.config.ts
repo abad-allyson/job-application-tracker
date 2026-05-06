@@ -36,3 +36,5 @@ export default defineNuxtConfig({
     },
   },
 });
+
+console.log("API URL at build time:", process.env.API);
