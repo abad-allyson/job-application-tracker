@@ -26,6 +26,7 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
+    apiUrl: process.env.API,
     public: {
       cookieConfig: {
         domain: (process.env.DOMAIN as string) ?? "localhost",
