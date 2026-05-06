@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 
+console.log("API URL at build time:", process.env.API);
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
@@ -36,5 +38,3 @@ export default defineNuxtConfig({
     },
   },
 });
-
-console.log("API URL at build time:", process.env.API);
