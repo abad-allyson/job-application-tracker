@@ -13,6 +13,7 @@ definePageMeta({
 
 useHead({
   title: "Log Out",
+  link: [{ rel: "icon", type: "image/png", href: "/icon.png" }],
 });
 
 const { cookieConfig } = useRuntimeConfig().public;

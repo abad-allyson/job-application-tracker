@@ -122,6 +122,7 @@ definePageMeta({
 
 useHead({
   title: "Create Account",
+  link: [{ rel: "icon", type: "image/png", href: "/icon.png" }],
 });
 
 const { requiredRule, emailRule, passwordRule, confirmPasswordRule } =
