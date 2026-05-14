@@ -200,6 +200,7 @@ definePageMeta({
 
 useHead({
   title: "Dashboard | JobTracker",
+  link: [{ rel: "icon", type: "image/png", href: "/icon.png" }],
 });
 
 import JobApplicationForm from "~/components/JobApplicationForm.vue";

@@ -69,6 +69,7 @@ definePageMeta({
 
 useHead({
   title: "Login",
+  link: [{ rel: "icon", type: "image/png", href: "/icon.png" }],
 });
 
 const { requiredRule } = useUtils();
