@@ -96,6 +96,7 @@
                   block
                   variant="flat"
                   :disabled="!valid"
+                  :loading="loading"
                   @click="signup()"
                   >Sign Up</v-btn
                 >
@@ -144,10 +145,12 @@ const message = ref("");
 const valid = ref(true);
 
 const confirmation = ref("");
+const loading = ref(false);
 
-function signup() {
+async function signup() {
   try {
-    add(user.value);
+    loading.value = true;
+    await add(user.value);
     confirmation.value =
       "Account created successfully! Redirecting to login...";
 
@@ -156,6 +159,7 @@ function signup() {
     }, 2000);
   } catch (error) {
     message.value = error.response._data.message;
+    loading.value = false;
   }
 }
 </script>
