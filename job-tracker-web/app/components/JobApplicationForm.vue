@@ -93,6 +93,7 @@
             color="secondary"
             variant="flat"
             size="large"
+            :loading="loading"
             :disabled="!valid"
             @click="handleSave"
           >
@@ -113,6 +114,7 @@ const props = defineProps({
   workSetupOptions: { type: Array, required: true },
   workTypeOptions: { type: Array, required: true },
   mode: { type: String, default: "add" },
+  loading: { type: Boolean, default: false },
 });
 
 const emit = defineEmits(["cancel", "save"]);

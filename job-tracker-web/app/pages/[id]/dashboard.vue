@@ -122,6 +122,7 @@
           :work-setup-options="workSetupOptions"
           :work-type-options="workTypeOptions"
           :status-options="statusOptions"
+          :loading="formLoading"
           @cancel="handleCancel"
           @save="handleSave"
         />
@@ -264,6 +265,7 @@ const showDetailsDrawer = ref(false);
 const snackbarDelete = ref(false);
 const snackbarUpdate = ref(false);
 const showDeleteConfirmation = ref(false);
+const formLoading = ref(false);
 
 const route = useRoute();
 const { addJobApplication, getByUserId, updateStatus, deleteById, updateById } =
@@ -358,12 +360,15 @@ function handleDeleteConfirmation() {
 
 async function handleSave(formData) {
   try {
+    formLoading.value = true;
     await addJobApplication({ userId: userId.value, application: formData });
     page.value = 1;
     await refreshApplications();
     showAddDialog.value = false;
   } catch (error) {
     console.error("Error adding application:", error);
+  } finally {
+    formLoading.value = false;
   }
 }
 
@@ -393,6 +398,7 @@ async function handleDelete() {
 
 async function handleUpdate(formData) {
   try {
+    formLoading.value = true;
     await updateById(selectedRow.value._id, {
       userId: userId.value,
       application: formData,
@@ -404,6 +410,8 @@ async function handleUpdate(formData) {
     showUpdateDialog.value = false;
   } catch (error) {
     console.error("Error adding application:", error);
+  } finally {
+    formLoading.value = false;
   }
 }
 
