@@ -100,8 +100,6 @@ async function login() {
   } catch (error) {
     message.value = error.response._data.message;
     loading.value = false;
-  } finally {
-    loading.value = false;
   }
 }
 </script>
