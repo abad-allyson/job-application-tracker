@@ -45,6 +45,7 @@
                   block
                   variant="flat"
                   :disabled="!valid"
+                  :loading="loading"
                   @click="login()"
                   >Login</v-btn
                 >
@@ -80,10 +81,12 @@ const password = ref("");
 
 const showPassword = ref(false);
 const message = ref("");
+const loading = ref(false);
 
 async function login() {
   const { cookieConfig } = useRuntimeConfig().public;
   try {
+    loading.value = true;
     const data = await $fetch(`/api/auth`, {
       method: "POST",
       body: { email: email.value, password: password.value },
@@ -96,6 +99,9 @@ async function login() {
     navigateTo({ name: "id-dashboard", params: { id: data.user } });
   } catch (error) {
     message.value = error.response._data.message;
+    loading.value = false;
+  } finally {
+    loading.value = false;
   }
 }
 </script>
