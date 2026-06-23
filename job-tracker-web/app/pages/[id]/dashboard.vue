@@ -60,6 +60,7 @@
                   variant="plain"
                   hide-details
                   width="180"
+                  @click.stop
                   @update:model-value="
                     (status) => handleStatusChange(item._id, status)
                   "
